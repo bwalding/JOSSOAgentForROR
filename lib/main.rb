@@ -1,8 +1,8 @@
 require 'josso_agent.rb'
 
 module Main
-  APP_CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), '../config/josso_config.yml'))[RAILS_ENV]
-
+  APP_CONFIG = YAML.load_file(File.join(RAILS_ROOT, './config/josso_config.yml'))[RAILS_ENV]
+  
   # <b>Implments the staic method</b> for<br />
   # who(here is ActionController in this plugin) will be extended with this JossoRorAgent Module
   def self.included(base_class)
