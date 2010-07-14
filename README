@@ -15,7 +15,7 @@ Example
     (1) create a Ruby On Rails application with NetBeans IDE and create a Controller such as TestController.
     (2) use the 'inject_josso_agent' method in the ApplicationController.
         class ApplicationController < ActionController::Base
-            # The ling below is you need to do.
+            # The line below is all you need to add
             inject_josso_agent
             helper :all
             protect_from_forgery # :secret => '82080e75741b9780ebdb607d770322ae'
