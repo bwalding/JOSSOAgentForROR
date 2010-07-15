@@ -69,8 +69,8 @@ module Main
         redirect_to partner_application_entry_url
       end
     rescue Exception => e
-      #redirect to unique error page of rece system
-      puts e
+      # Let the client deal with this for now; otherwise it gets into a bad state
+      raise e
     end
   end
 
