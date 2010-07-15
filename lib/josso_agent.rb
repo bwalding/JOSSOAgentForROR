@@ -6,9 +6,15 @@ class Jossoagent
   def initialize(sso_identity_manager_endpoint_url = nil,sso_identity_provider_endpoint_url = nil)
     @agent_identity_manager = SSOIdentityManager.new(sso_identity_manager_endpoint_url)
     @sso_identity_provider = SSOIdentityProvider.new(sso_identity_provider_endpoint_url)
+
+    after_initialize()
   end
-  
-#  def fin_roles_by_username(username)
+
+
+  def after_initialize
+  end
+
+#  def find_roles_by_username(username)
 #    @agent_identity_manager.findRolesByUsername(username)
 #  end
 #
