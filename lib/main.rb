@@ -1,10 +1,10 @@
 require 'josso_agent.rb'
 
 module Main
-  APP_CONFIG = YAML.load_file(File.join(RAILS_ROOT, './config/josso_config.yml'))[RAILS_ENV]
+  APP_CONFIG = YAML.load_file(::Rails.root.join('config/josso_config.yml'))[RAILS_ENV]
   
-  # <b>Implments the staic method</b> for<br />
-  # who(here is ActionController in this plugin) will be extended with this JossoRorAgent Module
+  # Implements the static method for who
+  # will be extended with this JossoRorAgent Module
   def self.included(base_class)
     base_class.extend(ClassMethods)
   end
@@ -18,11 +18,10 @@ module Main
   end
 
   private
-  # Check the user's authory
+  # Check the user's authority
   def authorize
     begin
       partner_application_entry_url = request.url if partner_application_entry_url.nil? 
-      puts partner_application_entry_url
       if (session[:username].nil?)
         login(partner_application_entry_url, params[:josso_assertion_id])
       else
@@ -32,7 +31,7 @@ module Main
   end
 
   def login(partner_application_entry_url, josso_assertion_id)
-    logger.info("Partner app URL: "+partner_application_entry_url)
+    logger.debug("Partner App URL: " + partner_application_entry_url)
     begin
       if (josso_assertion_id.nil?)
         redirect_to APP_CONFIG['josso_root'] + "signon/login.do?josso_back_to=" + partner_application_entry_url
@@ -53,7 +52,8 @@ module Main
         logger.info("SSO User security domain: "+sso_user.securitydomain)
 
         sso_user.properties.each do |k,v|
-          "#{k}=>#{v}"
+          nvp = k
+          logger.info("#{nvp.name}=>#{nvp.value}")
         end
         
         if (sso_user.nil?)
@@ -98,7 +98,7 @@ module Main
     ensure
       #redirect to unique error page of rece system
       reset_session
-      redirect_to APP_CONFIG['partner_application_entry_url']
+      redirect_to APP_CONFIG['partner_application_entry_url'] || '/'
     end
   end
 
