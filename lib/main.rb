@@ -29,6 +29,10 @@ module Main
       end
     end
   end
+  
+  def josso_agent
+    Jossoagent.new(APP_CONFIG['josso_root'] + 'services/SSOIdentityManager', APP_CONFIG['josso_root'] + 'services/SSOIdentityProvider')
+  end
 
   def login(partner_application_entry_url, josso_assertion_id)
     logger.debug("Partner App URL: " + partner_application_entry_url)
@@ -36,7 +40,7 @@ module Main
       if (josso_assertion_id.nil?)
         redirect_to APP_CONFIG['josso_root'] + "signon/login.do?josso_back_to=" + partner_application_entry_url
       else
-        jossoagent = Jossoagent.new(APP_CONFIG['josso_root'] + 'services/SSOIdentityManager', APP_CONFIG['josso_root'] + 'services/SSOIdentityProvider')
+        jossoagent = josso_agent
         josso_session_id = jossoagent.get_josso_session_id(josso_assertion_id)
         logger.info("josso_session_id: #{josso_session_id}")
         if (josso_session_id.nil?)
