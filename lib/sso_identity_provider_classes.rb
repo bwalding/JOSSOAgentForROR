@@ -2,9 +2,11 @@ require 'soap/mapping'
 require 'josso_classes.rb'
 
 module JossoMappingRegistry
-  EncodedRegistry = ::SOAP::Mapping::EncodedRegistry.new
-  LiteralRegistry = ::SOAP::Mapping::LiteralRegistry.new
-  NsProtocol = "http://josso.org/gateway/ws/1.1/protocol"
+  silence_warnings {
+    EncodedRegistry = ::SOAP::Mapping::EncodedRegistry.new
+    LiteralRegistry = ::SOAP::Mapping::LiteralRegistry.new
+    NsProtocol = "http://josso.org/gateway/ws/1.1/protocol"
+  }
 
   EncodedRegistry.register(
     :class => ResolveAuthenticationAssertionRequestType,
