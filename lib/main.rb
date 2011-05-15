@@ -1,7 +1,7 @@
 require 'josso_agent.rb'
 
 module Main
-  APP_CONFIG = YAML.load_file(::Rails.root.join('config/josso_config.yml'))[RAILS_ENV]
+  APP_CONFIG = YAML.load_file(::Rails.root.join('config/josso_config.yml'))[::Rails.env.to_s]
   
   # Implements the static method for who
   # will be extended with this JossoRorAgent Module
