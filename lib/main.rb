@@ -51,6 +51,7 @@ module Main
           return false
         end
         session[:josso_session_id] = josso_session_id
+        sso_user = jossoagent.find_user_in_session(josso_session_id)
         
         if (sso_user.nil?)
           logger.error("Nil SSO user")
@@ -59,16 +60,14 @@ module Main
           # login_error('Sorry! Fetching sso_user error.')
           return false
         else
-          
-          sso_user = jossoagent.find_user_in_session(josso_session_id)
           logger.info("SSO User Name: "+sso_user.name)
-          logger.info("SSO User security domain: "+sso_user.securitydomain)
+          logger.info("SSO User Security Domain: "+sso_user.securitydomain)
 
           sso_user.properties.each do |k,v|
             nvp = k
-            logger.info("#{nvp.name}=>#{nvp.value}")
+            logger.info("SSO User Property: #{nvp.name}=>#{nvp.value}")
           end
-          
+
           session[:username] = sso_user.name
           session[:session_timer_at] = Time.now.to_i
         end
