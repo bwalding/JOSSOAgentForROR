@@ -92,7 +92,7 @@ module Main
   end
 
   # Logout from the Josso
-  def logout()
+  def logout(redirect_url = nil)
     begin
       if(!session[:josso_session_id].nil?)
         jossoagent = Jossoagent.new(APP_CONFIG['josso_root'] + 'services/SSOIdentityManager', APP_CONFIG['josso_root'] + 'services/SSOIdentityProvider')
@@ -103,7 +103,7 @@ module Main
     ensure
       #redirect to unique error page of rece system
       reset_session
-      redirect_to APP_CONFIG['partner_application_entry_url'] || '/'
+      redirect_to redirect_url || APP_CONFIG['partner_application_entry_url'] || '/'
     end
   end
 
